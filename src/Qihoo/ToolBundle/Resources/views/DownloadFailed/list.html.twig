@@ -1,0 +1,52 @@
+{% extends '::base.html.twig' %}
+{% block main %}
+<div class="centercontent">
+	<div id="contentwrapper" class="contentwrapper">
+		<div class="tableoptions">
+			<select name="month" class="radius3" id="select_filter" onchange="v=this.options[this.options.selectedIndex].value;if(v != '') location.href='/tool/download_failed/index?month='+v;">
+				<option value="">=月份=</option>
+				<option value="1">01</option>
+				<option value="2">02</option>
+				<option value="3">03</option>
+				<option value="4">04</option>
+				<option value="5">05</option>
+				<option value="6">06</option>
+				<option value="7">07</option>
+				<option value="8">08</option>
+				<option value="9">09</option>
+				<option value="10">10</option>
+				<option value="11">11</option>
+				<option value="12">12</option>
+			</select>
+		</div>
+		<table id="apptable" cellpadding="0" cellspacing="0" border="0" class="stdtable stdtablequick">
+			<colgroup>
+				<col class="con0">
+				<col class="con0">
+				<col class="con0">
+				<col class="con1">
+			</colgroup>
+			<thead>
+				<tr>
+					<th class="head0">日期</th>
+					<th class="head0">下载失败率</th>
+					<th class="head0">CDN下载失败率</th>
+					<th class="head1">查看</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for entity in entities %}
+				<tr>
+					<td class="con0">{{ entity.day }}</td>
+					<td class="con0">{{ entity.rate }}%</td>
+					<td class="con0">{{ entity.cdnRate }}%</td>
+					<td class="center"><a href="detail?day={{ entity.day }}">详情</a></td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	<!--contentwrapper-->
+</div>
+<!--centercontent-->
+{% endblock %}

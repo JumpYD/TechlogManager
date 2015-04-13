@@ -1,0 +1,49 @@
+{% extends '::base.html.twig' %}
+{% block main %}
+<style type="text/css">
+    .content_title { font-weight: bold; }
+    .link_blue {color: blue; font-weight: bold;}
+</style>
+
+<div class="centercontent">
+
+<div class="pageheader notab">
+    <h1 class="pagetitle">搜索关键词全量数据展示</h1>
+    <span class="pagedesc">搜索数据</span>
+</div><!--pageheader-->
+
+<div id="contentwrapper" class="contentwrapper">
+    <form id="queryform" class="stdform_q" action="" method="post">
+        <div>
+            <p>
+                From: &nbsp;<input type="text" id="datepickfrom" /> &nbsp; &nbsp; To: &nbsp;<input type="text" id="datepickto" />
+            </p>
+        </div>
+        <div>
+            <p> 
+                <button id="queryform_sub" class="submit radius2">查询</button>
+            </p>
+        </div>
+        
+    </form>
+    <div class="contenttitle2">
+        <h3>列表结果</h3>
+    </div>
+    <div id="query_result">
+        {% include 'QihooToolBundle:SzSearch:query_result.html.twig' %}
+    </div>
+    
+    <img id="loaders" src="/images/loaders/loader6.gif" alt="">
+    <br clear="all"><br>
+</div><!--contentwrapper-->
+</div><!--centercontent-->
+
+<script type="text/javascript">
+    //需要传入下面js的变量定义
+    var GLOBAL_CONF = {
+        "action_query" : "{{ path('tool_szsearch_query') }}",
+        "action_detail" : "{{ path('tool_szsearch_detail') }}"
+    };
+</script>
+<script type="text/javascript" src="/bundles/qihootool/js/szsearch/list.js"></script>
+{% endblock %}

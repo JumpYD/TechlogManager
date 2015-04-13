@@ -1,0 +1,190 @@
+{% extends '::base.html.twig' %}
+{% block main %}
+<style type="text/css">
+    .content_title { font-weight: bold; }
+</style>
+
+<div class="centercontent">
+
+<div class="pageheader notab">
+    <h1 class="pagetitle">添加新资产</h1><br>
+        <span class="pagedesc" class="field"><a target="_blank" href="{{ path('tool_assets_list') }}" class="btn btn_link"><span>查询资产</span></a></span>
+        <span class="pagedesc" class="field"><a target="_blank" href="{{ path('tool_assets_add') }}" class="btn btn_link"><span>添加新资产</span></a></span>
+</div><!--pageheader-->
+
+<div id="contentwrapper" class="contentwrapper">
+    <form id="submitForm" class="stdform" action="" method="post">
+        <input type="hidden" id="entity_id" name="entity_id" value="{{ assets.id }}"/>
+        <div>
+            <p>
+                <label>类型</label>
+                <span class="field"><input type="text" id="type" name="type" class="smallinput" value="{{ assets.type }}"/></span>
+            </p>
+        </div>
+        <div>
+            <p>
+                <label>手机品牌</label>
+                <span class="field"><input type="text" id="brand" name="brand" class="smallinput" value="{{ assets.brand }}"/></span>
+            </p>
+        </div>
+        <div>
+            <p>
+                <label>型号</label>
+                <span class="field"><input type="text" id="modelType" name="modelType" class="smallinput" value="{{ assets.modelType }}"/></span>
+            </p>
+        </div>
+        <div>
+            <p>
+                <label>手机状态</label>
+                <span class="field"><input type="text" id="state" name="state" class="smallinput" value="{{ assets.state }}"/></span>
+            </p>
+        </div>
+        <div>
+            <p>
+                <label>机身存储</label>
+                <span class="field"><input type="text" id="memory" name="memory" class="smallinput" value="{{ assets.memory }}"/></span>
+            </p>
+        </div>
+        <div>
+            <p>
+                <label>机器资产编号</label>
+                <span class="field"><input type="text" id="identifier" name="identifier" class="smallinput" value="{{ assets.identifier }}"/></span>
+            </p>
+        </div>
+        <div>
+            <p>
+                <label>S/N</label>
+                <span class="field"><input type="text" id="sn" name="sn" class="smallinput" value="{{ assets.sn }}"/></span>
+            </p>
+        </div>
+        <div>
+            <p>
+                <label>IMEI</label>
+                <span class="field"><input type="text" id="imei" name="imei" class="smallinput" value="{{ assets.imei }}"/></span>
+            </p>
+        </div>
+        <div>
+            <p>
+                <label>SD卡</label>
+                <span class="field"><input type="text" id="sdcard" name="sdcard" class="smallinput" value="{{ assets.sdcard }}"/></span>
+            </p>
+        </div>
+        <div>
+            <p>
+                <label>数据线</label>
+                <span class="field"><input type="text" id="dataline" name="dataline" class="smallinput" value="{{ assets.dataline }}"/></span>
+            </p>
+        </div>
+        <div>
+            <p>
+                <label>电源</label>
+                <span class="field"><input type="text" id="power" name="power" class="smallinput" value="{{ assets.power }}"/></span>
+            </p>
+        </div>
+        <div>
+            <p>
+                <label>电池</label>
+                <span class="field"><input type="text" id="battery" name="battery" class="smallinput" value="{{ assets.battery }}"/></span>
+            </p>
+        </div>
+        <div>
+            <p>
+                <label>耳机线</label>
+                <span class="field"><input type="text" id="earline" name="earline" class="smallinput" value="{{ assets.earline }}"/></span>
+            </p>
+        </div>
+        <div>
+            <p>
+                <label>保修卡</label>
+                <span class="field"><input type="text" id="guarantee" name="guarantee" class="smallinput" value="{{ assets.guarantee }}"/></span>
+            </p>
+        </div>
+        <div>
+            <p>
+                <label>其他配件</label>
+                <span class="field"><input type="text" id="other" name="other" class="smallinput" value="{{ assets.other }}"/></span>
+            </p>
+        </div>
+        <div>
+            <p>
+                <label>领用人所在部门</label>
+                <span class="field"><input type="text" id="department" name="department" class="smallinput" value="{{ assets.department }}"/></span>
+            </p>
+        </div>
+        <div>
+            <p>
+                <label>领用人</label>
+                <span class="field"><input type="text" id="owner" name="owner" class="smallinput" value="{{ assets.owner }}"/></span>
+            </p>
+        </div>
+        {% if assets.id %}
+        <div>
+            <p>
+                <label>领用时间</label>
+                <span class="field"><input type="text" id="fetchTime" name="fetchTime" class="smallinput" value="{{ assets.fetchTime | date('Y-m-d H:i:s') }}" disabled="disabled"/></span>
+            </p>
+        </div>
+        {% endif %}
+        <div>
+            <p>
+                <label>具体使用人</label>
+                <span class="field"><input type="text" id="whouse" name="whouse" class="smallinput" value="{{ assets.whouse }}"/></span>
+            </p>
+        </div>
+        <div>
+            <p>
+                <label>归还时间</label>
+                <span class="field"><input type="text" id="returnTime" name="returnTime" class="smallinput" value="{% if assets.id %} {{ assets.returnTime | date('Y-m-d H:i:s') }} {% endif %}"/></span>
+            </p>
+        </div>
+        <div>
+            <p>
+                <label>归还时手机状态</label>
+                <span class="field"><input type="text" id="returnState" name="returnState" class="smallinput" value="{{ assets.returnState }}"/></span>
+            </p>
+        </div>
+        <div>
+            <p>
+                <label>备注</label>
+                <span class="field"><input type="text" id="note" name="note" class="smallinput" value="{{ assets.note }}"/></span>
+            </p>
+        </div>
+        {% if assets.id %}
+            <div>
+                <p>
+                    <label>操作人</label>
+                    <span class="field"><input type="text" id="operator" name="operator" class="smallinput" value="{{ assets.operator }}" disabled="disabled"/></span>
+                </p>
+            </div>
+            <div>
+                <p>
+                    <label>创建时间</label>
+                    <span class="field"><input type="text" id="createTime" name="createTime" class="smallinput" value="{{ assets.createTime | date('Y-m-d H:i:s') }}" disabled="disabled"/></span>
+                </p>
+            </div>
+            <div>
+                <p>
+                    <label>更新时间</label>
+                    <span class="field"><input type="text" id="updateTime" name="updateTime" class="smallinput" value="{{ assets.updateTime | date('Y-m-d H:i:s') }}" disabled="disabled"/></span>
+                </p>
+            </div>
+        {% endif %}
+        <div>
+            <p> 
+                <label>操作</label>
+                <button id="submitform_sub" type="submit" class="submit radius2">提交</button>
+            </p>
+        </div>
+    </form>
+    <br clear="all"><br>
+</div><!--contentwrapper-->
+</div><!--centercontent-->
+
+<script type="text/javascript">
+    //需要传入下面js的变量定义
+    var GLOBAL_CONF = {
+        "action_add" : "{{ path('tool_assets_add') }}", //创建链接
+    };
+</script>
+<script type="text/javascript" src="/bundles/qihootool/js/assets/modify.js"></script>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends '::base.html.twig' %}
+{% block main %}
+<style type="text/css">
+    .content_title { font-weight: bold; }
+</style>
+
+<div class="centercontent">
+
+<div class="pageheader notab">
+    <h1 class="pagetitle">搜索关键词排名修改</h1>
+
+    <span class="pagedesc" class="field"><a target="_self" href="{{ path('tool_keyword_list') }}" class="btn btn_link"><span>关键词列表</span></a></span>
+</div><!--pageheader-->
+
+<div id="contentwrapper" class="contentwrapper">
+    <form id="submitForm" class="stdform" action="" method="post">
+        <input type="hidden" id="id" name="id" value="{{ entity.id }}"/>
+        <div>
+            <p>
+                <label>关键词</label>
+                <span class="field"><input type="text" name="keyword" class="smallinput" {{ kw_readonly }} value="{{ entity.keyword }}"/></span>
+            </p>
+        </div>
+
+        <div>
+            <p>
+                <label>应用ID列表</label>
+                <span class="field"><input type="text" name="soft_id_list" class="smallinput" value="{{ entity.softIdList}}"/></span>
+                <span class="field">*多个应用ID(soft_id)用英文逗号(,)分隔</span>
+            </p>
+        </div>
+        <div>
+            <p> 
+                <label>&nbsp;</label>
+                <button id="submitform_sub" type="submit" class="submit radius2">提交</button>
+            </p>
+        </div>
+        <div>
+            <p><label></label><span class='error'>{{ error }}</span></p>
+        </div>
+        
+    </form>
+    
+    <br clear="all"><br>
+</div><!--contentwrapper-->
+</div><!--centercontent-->
+
+{% endblock %}

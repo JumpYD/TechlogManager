@@ -1,0 +1,56 @@
+<h4>总数：{{ total }}</h4><br/>
+<table id="logo_table" cellpadding="0" cellspacing="0" border="0" class="stdtable">
+    <thead class="center">
+        <tr>
+            <td width="3%">序号</td>
+            <td width="3%">类型</td>
+            <td width="3%">品牌</td>
+            <td width="3%">型号</td>
+            <td width="3%">状态</td>
+            <td width="5%">领用人所在部门</td>
+            <td width="3%">领用人</td>
+            <td width="3%">领用时间</td>
+            <td width="3%">具体使用人</td>
+            <td width="3%">归还时间</td>
+            <td width="5%">归还时手机状态</td>
+            <td width="5%">操作人员</td>
+            <td width="5%">创建时间</td>
+            <td width="5%">更新时间</td>
+            <td width="5%">操作</td>
+        </tr>
+    </thead>
+    <tbody class="center">
+        {% for asset in data %}
+            <tr>
+                <td>{{ asset.id }}</td>
+                <td>{{ asset.type}}</td>
+                <td>{{ asset.brand }}</td>
+                <td><a href="{{ path('tool_assets_info', {'id' : asset.id}) }}" target="_blank">{{ asset.modelType }}</a></td>
+                <td>{{ asset.state }}</td>
+                <td>{{ asset.department }}</td>
+                <td>{{ asset.owner }}</td>
+                <td>{{ asset.fetchTime | date('Y-m-d H:i:s') }}</td>
+                <td>{{ asset.whouse }}</td>
+                <td>{{ asset.returnTime | date('Y-m-d H:i:s') }}</td>
+                <td>{{ asset.returnState }}</td>
+                <td>{{ asset.operator }}</td>
+                <td>{{ asset.createTime | date('Y-m-d H:i:s') }}</td>
+                <td>{{ asset.updateTime | date('Y-m-d H:i:s') }}</td>
+                <td class="actions">
+                    <a href="{{ path('tool_assets_add', {'id' : asset.id}) }}" target="_blank">修改</a>
+                    <a class="app_delete" href="">删除</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% if totalPages > 1 %}
+<div class="dataTables_paginate">
+    <div id="pager"></div>
+</div>
+{% endif %}
+
+<input type="hidden" id="totalPages" value="{{ totalPages }}"/>
+<input type="hidden" id="p" value="{{ p }}"/>
+<input type="hidden" id="pn" value="{{ pn }}"/>

@@ -1,0 +1,7 @@
+{% extends '::base.html.twig' %}
+{% block main %}
+<script language="javascript" type="text/javascript">
+    if(jAlert("{{ message }}", "{{ title }}"))
+        window.location.href="{{ url }}";
+</script>
+{% endblock %}

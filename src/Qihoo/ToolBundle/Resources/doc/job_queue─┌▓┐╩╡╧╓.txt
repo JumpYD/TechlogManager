@@ -1,0 +1,16 @@
+下面为队列中的数据格式：
+redis 127.0.0.1:6379> lpop resque:queue:test
+"{\"class\":\"Component\\\\Job\\\\JobServiceRunner\",\"args\":[{\"service\":[\"job.test\",\"test_hello\"],\"params\":[],\"kernel.root_dir\":\"\\/usr\\/local\\/www\\/whiterd\\/app\",\"kernel.debug\":true,\"kernel.environment\":\"dev\"}],\"id\":\"fd66c3dbf72d0ae97eacd7181cc85b4d\"}"
+
+class为执行job的类
+args为该类执行的参数（我们将service的调用放在这里）
+kernel的几个变量表示当前的执行代码路径（需要根据它找到appkernel，并初始化container）
+
+
+单进程性能
+在dev环境下测试，每秒种4次执行
+在prod环境下，每秒钟12次执行
+适合比较重的任务
+
+
+dev环境支持热代码替换

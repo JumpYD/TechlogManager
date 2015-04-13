@@ -1,0 +1,27 @@
+{% extends '::base.html.twig' %}
+{% block main %}
+<div class="centercontent">
+	<div id="contentwrapper" class="contentwrapper">
+	<table id="apptable" cellpadding="0" cellspacing="0" border="0" class="stdtable stdtablequick">
+		<thead>
+			<tr>
+				<th class="head0">状态码</th>
+				<th class="head0">打点次数</th>
+				<th class="head0">比率</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for entity in entities %}
+			<tr>
+				<td class="con0">{{ entity['status'] }}</td>
+				<td class="con0">{{ entity['count'] }}</td>
+				<td class="con0">{{ entity['rate'] }}%</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	</div>
+	<!--contentwrapper-->
+</div>
+<!--centercontent-->
+{% endblock %}

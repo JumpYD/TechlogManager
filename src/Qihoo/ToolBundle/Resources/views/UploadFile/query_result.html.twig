@@ -1,0 +1,64 @@
+<h4>总数：{{ total }}</h4><br/>
+<table id="result_table" cellpadding="0" cellspacing="0" border="0" class="stdtable">
+    <thead class="center">
+        <tr>
+            <td width="5%">ID</td>
+            <td width="8%">md5</td>
+            <td width="8%">来源</td>
+            <td width="8%">下载链接</td>
+            <td width="8%">状态</td>
+            <td width="8%">任务id</td>
+            <td width="20%">错误消息</td>
+            <td width="8%">上传请求时间</td>
+            <td width="8%">地址生效时间</td>
+            <td width="8%">上传用户</td>
+            <td width="10%">操作</td>
+        </tr>
+    </thead>
+    <tbody class="center">
+        {% for entity in entities %}
+            <tr>
+                <td>{{ entity.id }}</td>
+                <td>{{ entity.md5 }}</td>
+                <td>
+                    {% if entity.frm == 0 %}人工提交
+                    {% elseif entity.frm == 1 %}自动apk包
+                    {% elseif entity.frm == 2 %}自动apk差量包
+                    {% elseif entity.frm == 3 %}自动渠道包
+                    {% endif %}
+                </td>
+                <td><a class="link_blue" href="http://dl.zhushou.360safe.com/{{ entity.path }}" target="blank">链接</a></td>
+                <td>
+                    {% if entity.state == 0 %}未提交
+                    {% elseif entity.state == 1 %}<span class="color_succ">地址已生效</span>
+                    {% elseif entity.state == 2 %}<span class="color_warn">同步失败</span>
+                    {% elseif entity.state == 3 %}同步等待中
+                    {% elseif entity.state == 4 %}同步中
+                    {% elseif entity.state == 5 %}同步完成
+                    {% endif %}
+                </td>
+                <td>{{ entity.taskId }}</td>
+                <td>{{ entity.message }}</td>
+                <td>{% if entity.reqTime %}{{ entity.reqTime | date("Y-m-d H:i:s") }}{% endif %}</td>
+                <td>{% if entity.finishTime %}{{ entity.finishTime | date("Y-m-d H:i:s") }}{% endif %}</td>
+                <td>{{ entity.opUser }}</td>
+                <td class="actions" style="min-width: 80px">
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% if totalPages > 1 %}
+<div class="gigantic pagination">
+    <a href="#" class="first" data-action="first">&laquo;</a>
+    <a href="#" class="previous" data-action="previous">&lsaquo;</a>
+    <input type="text" readonly="readonly" data-max-page="40" />
+    <a href="#" class="next" data-action="next">&rsaquo;</a>
+    <a href="#" class="last" data-action="last">&raquo;</a>
+</div>
+{% endif %}
+
+<input type="hidden" id="totalPages" value="{{ totalPages }}"/>
+<input type="hidden" id="p" value="{{ p }}"/>
+<input type="hidden" id="pn" value="{{ pn }}"/>

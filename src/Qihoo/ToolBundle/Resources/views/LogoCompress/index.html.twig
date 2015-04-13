@@ -1,0 +1,77 @@
+{% extends '::base_clean.html.twig' %}
+{% block main %}
+<style type="text/css">
+</style>
+
+<div class="centercontent">
+    <div class="pageheader notab">
+        <h1 class="pagetitle">PNG图片压缩管理</h1>
+        <span class="pagedesc">进行png类的图片的压缩，减少体积</span>
+    </div><!--pageheader-->
+
+    <div id="contentwrapper" class="contentwrapper">
+        <form id="queryform" class="stdform_q" action="" method="post">
+            <div>
+                <p>
+                    <label>直接上传文件</label>
+                    <span class="field"><input type="file" id="logo_file" name="files[]" data-url='{{ path("api_imagesdk_logocompressfile") }}' /></span>
+                </p>
+            </div>
+            <div>
+                <p>
+                    <label>提交链接</label>
+                    <span class="field">
+                        <input type="text" id="logo_url" name="logo_url" class="smallinput" value=""/>&nbsp;&nbsp;
+                        <button id="logo_url_submit" class="stdbtn btn_yellow">提交</button>
+                    </span>
+                </p>
+            </div>
+        </form>
+        <div class="contenttitle2">
+            <h3>图片输出结果</h3>
+        </div>
+
+        <div id="img_result">
+            <p style="font-size:14px"><b>链接：</b><span id="compress_url_span" style="color:blue"></span></p>
+            <p><img id="compress_url_img" src=""/></p>
+        </div>
+    </div><!-- contentwrapper -->
+</div><!--centercontent-->
+
+<script type="text/javascript">
+    function updateUrlDisp(url) {
+        $("#compress_url_span").text(url);
+        $("#compress_url_img").attr("src", url);
+    }
+
+    //上传logo图片
+    $("#logo_file").fileupload({
+        done: function(e, data) {
+            var result = data.result;
+            if (result["code"] != 0) {
+                alert(result["msg"]);
+            } else {
+                updateUrlDisp(result['url']);
+            }
+        }
+    });
+
+    //提交logo链接
+    $("#logo_url_submit").click(function() {
+        var logoUrl = $("#logo_url").val();
+        var url = "{{ path("api_imagesdk_logocompressurl") }}";
+        var params = {
+            "orig_url" : logoUrl
+        };
+        ajax_submit(url, params, function(data) {
+            if (data['code'] != 0) {
+                alert("错误: " + data['msg']);
+            } else {
+                updateUrlDisp(data['url']);
+            }
+        });
+        return false;
+    });
+
+    </script>
+{% endblock %}

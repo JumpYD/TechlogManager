@@ -1,0 +1,41 @@
+{% extends '::base.html.twig' %}
+{% block main %}
+<style type="text/css">
+    .content_title { font-weight: bold; }
+    .uushine {background-color: #78B270;border: 1px solid #71AD69;color: #FFFFFF;height: 30px;line-height: 30px;padding: 10px;}
+</style>
+<div class="centercontent">
+    <div class="pageheader notab">
+        <h1 class="pagetitle">邮件组管理</h1><br>
+        <span class="pagedesc" class="field"><a target="_self" href="{{ path('tool_email_list') }}" class="btn btn_link"><span>邮件组列表</span></a></span>
+    </div>
+    <!--pageheader-->
+    <div id="contentwrapper" class="contentwrapper">
+        <form id="queryform" class="stdform_q" action="{{ path('tool_email_modifymember') }}" method="post">
+            <div>
+                <p>
+                    <label>姓名</label>
+                    <span class="field"><input type="text" id="member_name" name="member_name" class="smallinput" value="{{ entity.memberName }}"/></span>
+                </p>
+                <p>
+                    <label>Email</label>
+                    <span class="field"><input type="text" id="email" name="email" class="smallinput" value="{{ entity.email}}"/></span>
+                </p>
+                <p>
+                    <label>Phone</label>
+                    <span class="field"><input type="text" id="phone" name="phone" class="smallinput" value="{{ entity.phone }}"/></span>
+                </p>
+                <input type='hidden' id="member_id" name="member_id" class="smallinput" value="{{ entity.memberId }}"/>
+            </div>
+            <div>
+                <p>
+                    <label></label>
+                    <span class="field"><button type='submit' id="queryform_sub" class="submit radius2">修改</button></span>
+                </p>
+            </div>
+        </form>
+    </div>
+    <!--contentwrapper-->
+</div>
+<!--centercontent-->
+{% endblock %}

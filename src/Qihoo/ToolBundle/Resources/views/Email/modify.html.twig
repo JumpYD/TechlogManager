@@ -1,0 +1,99 @@
+{% extends '::base.html.twig' %}
+{% block main %}
+<style type="text/css">
+    .content_title { font-weight: bold; }
+    .uushine {background-color: #78B270;border: 1px solid #71AD69;color: #FFFFFF;height: 30px;line-height: 30px;padding: 10px;}
+</style>
+<div class="centercontent">
+    <div class="pageheader notab">
+        <h1 class="pagetitle">邮件组管理</h1><br>
+        <span class="pagedesc" class="field"><a target="_self" href="{{ path('tool_email_list') }}" class="btn btn_link"><span>邮件组列表</span></a></span>
+    </div>
+    <!--pageheader-->
+    <div id="contentwrapper" class="contentwrapper">
+        <form id="modifyGroup" class="stdform_q" action="{{ path('tool_email_modifygroup') }}" method="post">
+            <div>
+              <p>
+                <label>邮件组名称</label>
+                    <input type='hidden' id="group_id" name="group_id" class="smallinput" value="{{ group['group_id'] }}"/>
+                <span class="field"><input type="text" id="group_name" name="group_name" class="smallinput" value="{{ group['group_name'] }}" /></span>
+                <input type='hidden' id="group_id" name="group_id" class="smallinput" value="{{ group['group_id'] }}"/>
+              </p>
+            </div>
+            <div>
+              <p>
+                <label>备注</label>
+                <span class="field"><textarea rows='3' cols="200" id="group_comment" name="group_comment" class="smallinput">{{ group['group_comment'] }}</textarea></span>
+              </p>
+            </div>
+            <div>
+                <p>
+                    <label></label>
+                    <span class="field"><button type='submit' class="submit radius2">修改</button></span>
+                </p>
+            </div>
+        </form>
+        <form id="queryform" class="stdform_q" action="{{ path('tool_email_modify') }}" method="post">
+            <div>
+                <p>
+                    <label>姓名</label>
+                    <span class="field"><input type="text" id="member_name" name="member_name" class="smallinput" value=""/></span>
+                </p>
+                <p>
+                    <label>Email</label>
+                    <span class="field"><input type="text" id="email" name="email" class="smallinput" value=""/></span>
+                </p>
+                <p>
+                    <label>Phone</label>
+                    <span class="field"><input type="text" id="phone" name="phone" class="smallinput" value=""/></span>
+                </p>
+                <input type='hidden' id="group_id" name="group_id" class="smallinput" value="{{ group['group_id'] }}"/>
+            </div>
+            <div>
+                <p>
+                    <label></label>
+                    <span class="field"><button type='submit' id="queryform_sub" class="submit radius2">添加</button></span>
+                </p>
+            </div>
+            <div>
+                <p><label></label><span class='error'>{{ error }}</span></p>
+            </div>
+        </form>
+        <div class="contenttitle2">
+            <h3>列表结果</h3>
+        </div>
+        <div id="query_result">
+
+          <table id="logo_table" cellpadding="0" cellspacing="0" border="0" class="stdtable">
+              <thead class="center">
+                  <tr>
+                      <td width="20%">姓名</td>
+                      <td width="20%">邮箱</td>
+                      <td width="20%">电话</td>
+                      <td width="10%">创建时间</td>
+                      <td width="10%">更新时间</td>
+                      <td width="10%">操作</td>
+                  </tr>
+              </thead>
+              <tbody class="center">
+                  {% for member in members %}
+                      <tr>
+                          <td>{{ member.memberName }}</td>
+                          <td>{{ member.email }}</td>
+                          <td>{{ member.phone }}</td>
+                          <td>{{ member.createTime | date('Y-m-d H:i:s') }}</td>
+                          <td>{{ member.updateTime | date('Y-m-d H:i:s') }}</td>
+                          <td class="actions">
+                              <a href="{{ path('tool_email_memberdelete', {'member_id' : member.memberId,'group_id' : member.groupId}) }}" target="_self">删除</a>
+                              <a href="{{ path('tool_email_showmember', {'member_id' : member.memberId,'group_id' : member.groupId}) }}" target="_self">修改</a>
+                          </td>
+                      </tr>
+                  {% endfor %}
+              </tbody>
+          </table>
+        </div>
+    </div>
+    <!--contentwrapper-->
+</div>
+<!--centercontent-->
+{% endblock %}

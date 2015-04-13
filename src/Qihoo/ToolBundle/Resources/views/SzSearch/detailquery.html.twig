@@ -1,0 +1,45 @@
+<h4>总数：{{ total }}</h4><br/>
+<table id="logo_table" cellpadding="0" cellspacing="0" border="0" class="stdtable">
+    <thead class="center">
+        <tr>
+            <td width="5%">统计日期</td>
+            <td width="5%">关键字</td>
+            <td width="5%">搜索次数</td>
+            <td width="5%">搜索人数</td>
+            <td width="5%">下载量</td>
+            <td width="5%">下载人数</td>
+            <td width="5%">前7条结果展示</td>
+            <td width="5%">前7条结果下载</td>
+        </tr>
+    </thead>
+    <tbody class="center">
+        {% for entity in entities %}
+            <tr>
+                <td>{{ entity.day }}</td>
+                <td>{{ entity.keyword }}</td>
+                <td>{{ entity.search_time }}</td>
+                <td>{{ entity.search_people }}</td>
+                <td>{{ entity.down_time }}</td>
+                <td>{{ entity.down_people }}</td>
+                <td>{{ entity.pre7_display }}</td>
+                <td>{{ entity.pre7_down }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% if totalPages > 1 %}
+<div class="gigantic pagination">
+    <a href="#" class="first" data-action="first">&laquo;</a>
+    <a href="#" class="previous" data-action="previous">&lsaquo;</a>
+    <input type="text" readonly="readonly" data-max-page="40" />
+    <a href="#" class="next" data-action="next">&rsaquo;</a>
+    <a href="#" class="last" data-action="last">&raquo;</a>
+</div>
+{% endif %}
+
+<input type="hidden" id="totalPages" value="{{ totalPages }}"/>
+<input type="hidden" id="page" value="{{ page }}"/>
+<input type="hidden" id="page_size" value="{{ pageSize }}"/>
+<input type="hidden" id="day" value="{{ entities.0.day }}"/>
+

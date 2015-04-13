@@ -1,0 +1,44 @@
+{% extends '::base.html.twig' %}
+{% block main %}
+<div class="centercontent">
+    <div class="pageheader">
+        <h1 class="pagetitle">自动上传应用</h1>
+        <span class="pagedesc">提交应用下载链接，后台自动上传到助手服务器</span>
+    </div>
+    <div id="contentwrapper" class="contentwrapper">
+
+        <div class="contenttitle2">
+            <h3>提交上传url</h3>
+        </div><!--contenttitle-->
+        <div id="urlform" class="subcontent" style="display: block; ">
+            <form class="stdform" action="" method="post">
+                <p>
+                    <label>应用下载url</label>
+                    <span class="field"><input type="text" id="url" name="input1" class="smallinput"></span>
+                </p>
+                <p class="stdformbutton">
+                    <button id="urlsub" class="submit radius2">添加</button>
+                </p>
+            </form>
+        </div>
+
+        <div class="contenttitle2">
+            <h3>上传应用列表</h3>
+        </div>
+        <div id="applist">
+            {% include 'QihooToolBundle:AutoDownUrl:list.html.twig' %}
+        </div><!--applist-->
+
+
+    </div><!--contentwrapper-->
+</div><!-- centercontent -->
+<script type="text/javascript">
+    //需要传入下面js的变量定义
+    var GLOBAL_CONF = {
+        "action_add" : "{{ path('tool_autodownurl_add') }}", //添加新url的链接
+        "action_del" : "{{ path('tool_autodownurl_del') }}", //删除url的链接
+    };
+</script>
+<script type="text/javascript" src="/bundles/qihootool/js/autodownurl/index.js"></script>
+
+{% endblock %}

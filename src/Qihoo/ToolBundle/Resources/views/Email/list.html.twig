@@ -1,0 +1,50 @@
+{% extends '::base.html.twig' %}
+{% block main %}
+<style type="text/css">
+    .content_title { font-weight: bold; }
+    .uushine {background-color: #78B270;border: 1px solid #71AD69;color: #FFFFFF;height: 30px;line-height: 30px;padding: 10px;}
+</style>
+<div class="centercontent">
+    <div class="pageheader notab">
+        <h1 class="pagetitle">邮件组管理</h1><br>
+        <span class="pagedesc" class="field"><a target="_self" href="{{ path('tool_email_addgroup') }}" class="btn btn_link"><span>添加邮件组</span></a></span>
+    </div>
+    <!--pageheader-->
+    <div id="contentwrapper" class="contentwrapper">
+        <form id="queryform" class="stdform_q" action="" method="post">
+            <div>
+                <p>
+                    <label>邮件组ID</label>
+                    <span class="field"><input type="text" id="group_id" name="group_id" class="smallinput" value=""/></span>
+                </p>
+                <p>
+                    <label>邮件组名称</label>
+                    <span class="field"><input type="text" id="group_name" name="group_name" class="smallinput" value=""/></span>
+                </p>
+            </div>
+            <div>
+                <p>
+                    <label></label>
+                    <span class="field"><button type='submit' id="queryform_sub" class="submit radius2">查询</button></span>
+                </p>
+            </div>
+        </form>
+        <div class="contenttitle2">
+            <h3>列表结果</h3>
+        </div>
+        <div id="query_result">
+            {% include 'QihooToolBundle:Email:query_result.html.twig' %}
+        </div>
+    </div>
+    <!--contentwrapper-->
+</div>
+<!--centercontent-->
+
+<script type="text/javascript">
+    //需要传入下面js的变量定义
+    var GLOBAL_CONF = {
+        "action_query" : "{{ path('tool_email_query') }}",
+    };
+</script>
+<script type="text/javascript" src="/bundles/qihootool/js/email/list.js"></script>
+{% endblock %}

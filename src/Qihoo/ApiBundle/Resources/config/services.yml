@@ -1,0 +1,7 @@
+parameters:
+#    qihoo_api.example.class: Qihoo\ApiBundle\Example
+
+services:
+#    qihoo_api.example:
+#        class: %qihoo_api.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

@@ -1,0 +1,77 @@
+{% extends '::base.html.twig' %}
+{% block main %}
+<style type="text/css">
+    .content_title { font-weight: bold; }
+    .uushine {background-color: #78B270;border: 1px solid #71AD69;color: #FFFFFF;height: 30px;line-height: 30px;padding: 10px;}
+    .link_blue {color: blue; font-weight: bold;}
+    .color_succ {color: green; }
+    .color_warn {color: red; }
+</style>
+<div class="centercontent">
+    <div class="pageheader notab">
+        <h1 class="pagetitle">上传文件管理</h1>
+        <span class="pagedesc">进行上传文件的操作，查看已上传的文件</span>
+    </div>
+    <!--pageheader-->
+    <div id="contentwrapper" class="contentwrapper">
+        <form id="queryform" class="stdform_q" action="" method="post">
+            <div>
+                <p>
+                    <label>文件MD5</label>
+                    <span class="field"><input type="text" id="md5" name="md5" class="smallinput" value=""/></span>
+                </p>
+                <p>
+                    <label>来源</label>
+                    <span class="field">
+                        <select id="frm" name="frm" class="uniformselect">
+                            <option value="">全部</option>
+                            <option value="0">手动上传</option>
+                            <option value="1">自动apk包</option>
+                            <option value="2">自动apk差量包</option>
+                            <option value="3">自动渠道包</option>
+                        </select>
+                    </span>
+                </p>
+                <p>
+                    <label>状态</label>
+                    <span class="field">
+                        <select id="state" name="state" class="uniformselect">
+                            <option value="">全部</option>
+                            <option value="0">未开始</option>
+                            <option value="1">地址已生效</option>
+                            <option value="2">同步cdn失败</option>
+                            <option value="3">等待同步</option>
+                            <option value="4">同步中</option>
+                            <option value="5">同步完成</option>
+                        </select>
+                    </span>
+                </p>
+            </div>
+            <div>
+                <p>
+                    <label>&nbsp;</label>
+                    <span class="field"><button id="queryform_sub" class="submit radius2">查询</button></span>
+                </p>
+            </div>
+        </form>
+        <div class="contenttitle2">
+            <h3>列表结果</h3>
+        </div>
+        <div id="query_result">
+            {% include 'QihooToolBundle:UploadFile:query_result.html.twig' %}
+        </div>
+        <img id="loaders" src="/images/loaders/loader6.gif" alt="">
+        <div clear="all"></div>
+    </div>
+    <!--contentwrapper-->
+</div>
+<!--centercontent-->
+
+<script type="text/javascript">
+    //需要传入下面js的变量定义
+    var GLOBAL_CONF = {
+        "action_query" : "{{ path('tool_uploadfile_query') }}"
+    };
+</script>
+<script type="text/javascript" src="/bundles/qihootool/js/uploadfile/list.js"></script>
+{% endblock %}

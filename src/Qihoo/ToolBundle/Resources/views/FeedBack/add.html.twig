@@ -1,0 +1,93 @@
+{% extends '::base.html.twig' %}
+{% block main %}
+<style type="text/css">
+    .content_title { font-weight: bold; }
+</style>
+
+<div class="centercontent">
+
+<div class="pageheader notab">
+    <h1 class="pagetitle">添加新反馈</h1><br>
+        <span class="pagedesc" class="field"><a target="_blank" href="{{ path('tool_feedback_list') }}" class="btn btn_link"><span>查询反馈</span></a></span>
+        <span class="pagedesc" class="field"><a target="_blank" href="{{ path('tool_feedback_add') }}" class="btn btn_link"><span>添加新反馈</span></a></span>
+</div><!--pageheader-->
+
+<div id="contentwrapper" class="contentwrapper">
+    <form id="submitForm" class="stdform" action="" method="post">
+        <input type="hidden" id="entity_id" name="entity_id" value="{{ feedback.id }}"/>
+        <div>
+            <p>
+                <label>客户端版本</label>
+                <span class="field">
+                    <input type="text" id="version" name="version" class="smallinput" value="{{ feedback.version }}" {% if feedback.id %}disabled="disabled"{% endif %}/>
+                </span>
+            </p>
+        </div>
+        <div>
+            <p>
+                <label>反馈问题</label>
+                <span class="field">
+                    <textarea cols="80" rows="5" id="question" name="question" class="smallinput" {% if feedback.id %}disabled="disabled"{% endif %}>{{ feedback.question }}</textarea>
+                </span>
+            </p>
+        </div>
+        <div>
+            <p>
+                <label>问题状态</label>
+                <span class="field">
+                    <select id="state" name="state" class="uniformselect">
+                    <option value="">请选择</option>
+                    <option value="1" {% if feedback.state == 1 %}selected="selected"{% endif %}>未开始</option>
+                    <option value="2" {% if feedback.state == 2 %}selected="selected"{% endif %}>进行中</option>
+                    <option value="3" {% if feedback.state == 3 %}selected="selected"{% endif %}>已完成</option>
+                    </select>
+                </span>
+            </p>
+        </div>
+        <div>
+            <p>
+                <label>处理情况</label>
+                <span class="field">
+                    <textarea cols="80" rows="5" id="process" name="process" class="smallinput">{{ feedback.process }}</textarea>
+                </span>
+            </p>
+        </div>
+        {% if feedback.id %}
+            <div>
+                <p>
+                    <label>操作人</label>
+                    <span class="field"><input type="text" id="operator" name="operator" class="smallinput" value="{{ feedback.operator }}" disabled="disabled"/></span>
+                </p>
+            </div>
+            <div>
+                <p>
+                    <label>反馈时间</label>
+                    <span class="field"><input type="text" id="createTime" name="createTime" class="smallinput" value="{{ feedback.createTime | date('Y-m-d H:i:s') }}" disabled="disabled"/></span>
+                </p>
+            </div>
+            <div>
+                <p>
+                    <label>处理时间</label>
+                    <span class="field"><input type="text" id="updateTime" name="updateTime" class="smallinput" value="{{ feedback.updateTime | date('Y-m-d H:i:s') }}" disabled="disabled"/></span>
+                </p>
+            </div>
+        {% endif %}
+        <div>
+            <p> 
+                <label>操作</label>
+                <button id="submitform_sub" type="submit" class="submit radius2">提交</button>
+            </p>
+        </div>
+    </form>
+    <br clear="all"><br>
+</div><!--contentwrapper-->
+</div><!--centercontent-->
+
+<script type="text/javascript">
+    //需要传入下面js的变量定义
+    var GLOBAL_CONF = {
+        "action_add" : "{{ path('tool_feedback_add') }}", //创建链接
+    };
+</script>
+<script type="text/javascript" src="/bundles/qihootool/js/feedback/modify.js"></script>
+{% endblock %}

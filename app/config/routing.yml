@@ -1,0 +1,39 @@
+techlog_manager:
+    resource: "@TechlogManagerBundle/Controller/"
+    type:     annotation
+    prefix:   /techlog_manager
+
+qihoo_api:
+    resource: "@QihooApiBundle/Controller/"
+    prefix:   /api
+
+qihoo_tool:
+    resource: "@QihooToolBundle/Controller/"
+    type:     annotation
+    prefix:   /tool
+
+qihoo_user:
+    resource: "@QihooUserBundle/Controller/"
+    type:     annotation
+    prefix:   /user
+
+admin_root:
+    pattern:  /
+    defaults:
+        _controller: FrameworkBundle:Redirect:urlRedirect
+        path: /user/homepage
+        permanent: true
+
+BCCResqueBundle:
+    resource: "@BCCResqueBundle/Resources/config/routing.xml"
+    prefix:   /resque
+    
+
+# Internal routing configuration to handle ESI
+# ****** WARNING ******
+# This route should be enabled with caution as it can open a security vulnerability
+# see http://symfony.com/blog/security-release-symfony-2-0-20-and-2-1-5-released for more information
+# ****** WARNING ******
+#_internal:
+#    resource: "@FrameworkBundle/Resources/config/routing/internal.xml"
+#    prefix:   /_internal

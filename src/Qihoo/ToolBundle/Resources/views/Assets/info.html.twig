@@ -1,0 +1,86 @@
+{% extends '::base.html.twig' %}
+{% block main %}
+<style type="text/css">
+    .content_title { font-weight: bold; }
+</style>
+
+<div class="centercontent">
+
+<div class="pageheader notab">
+    <h1 class="pagetitle">资产明细</h1><br>
+        <span class="pagedesc" class="field"><a target="_blank" href="{{ path('tool_assets_list') }}" class="btn btn_link"><span>查询资产</span></a></span>
+        <span class="pagedesc" class="field"><a target="_blank" href="{{ path('tool_assets_add') }}" class="btn btn_link"><span>添加新资产</span></a></span>
+</div><!--pageheader-->
+
+<div id="contentwrapper" class="contentwrapper">
+    <div class="contenttitle2">
+        <h3>资产详细信息</h3>
+    </div>
+    <table id="logo_table" cellpadding="0" cellspacing="0" border="0" class="stdtable">
+        <thead class="center">
+            <tr>
+                <td width="5%">类型</td>
+                <td width="5%">品牌</td>
+                <td width="5%">型号</td>
+                <td width="5%">状态</td>
+                <td width="5%">机身存储</td>
+                <td width="5%">机器资产编号</td>
+                <td width="5%">S/N</td>
+                <td width="5%">IMEI</td>
+                <td width="5%">SD卡</td>
+                <td width="5%">数据线</td>
+                <td width="5%">电源</td>
+                <td width="5%">电池</td>
+                <td width="5%">耳机线</td>
+                <td width="5%">保修卡</td>
+                <td width="5%">其他配件</td>
+            </tr>
+        </thead>
+        <tbody class="center">
+            <tr>
+                <td>{{ assets.type}}</td>
+                <td>{{ assets.brand }}</td>
+                <td>{{ assets.modelType }}</td>
+                <td>{{ assets.state }}</td>
+                <td>{{ assets.memory }}</td>
+                <td>{{ assets.identifier }}</td>
+                <td>{{ assets.sn }}</td>
+                <td>{{ assets.imei }}</td>
+                <td>{{ assets.sdcard }}</td>
+                <td>{{ assets.dataline }}</td>
+                <td>{{ assets.power }}</td>
+                <td>{{ assets.battery }}</td>
+                <td>{{ assets.earline }}</td>
+                <td>{{ assets.guarantee }}</td>
+                <td>{{ assets.other }}</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <div class="contenttitle2">
+        <h3>资产管理历史记录</h3>
+    </div>
+    <table id="logo_table" cellpadding="0" cellspacing="0" border="0" class="stdtable">
+        <thead class="center">
+            <tr>
+                <td width="5%">领用人</td>
+                <td width="5%">领用人所在部门</td>
+                <td width="5%">领用时间</td>
+                <td width="5%">具体使用人</td>
+                <td width="5%">归还时手机状态</td>
+            </tr>
+        </thead>
+        <tbody class="center">
+            {% for one in assetsHistory %}
+                <tr>
+                    <td>{{ one.owner }}</td>
+                    <td>{{ one.department }}</td>
+                    <td>{{ one.fetchTime | date('Y-m-d H:i:s') }}</td>
+                    <td>{{ one.whouse }}</td>
+                    <td>{{ one.returnState }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

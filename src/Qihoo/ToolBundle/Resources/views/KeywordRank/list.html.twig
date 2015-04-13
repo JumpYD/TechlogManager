@@ -1,0 +1,26 @@
+{% extends '::base.html.twig' %}
+{% block main %}
+<style type="text/css">
+    .content_title { font-weight: bold; }
+</style>
+
+<div class="centercontent">
+
+<div class="pageheader notab">
+    <h1 class="pagetitle">关键字搜索排名管理</h1>
+
+    <span class="pagedesc" class="field"><a target="_self" href="{{ path('tool_keyword_new') }}" class="btn btn_link"><span>添加新关键字</span></a></span>
+</div><!--pageheader-->
+
+<div id="contentwrapper" class="contentwrapper">
+    <div class="contenttitle2">
+        <h3>列表结果</h3>
+    </div>
+    <div id="query_result">
+        {% include 'QihooToolBundle:KeywordRank:query_result.html.twig' %}
+    </div>
+    
+</div><!--contentwrapper-->
+</div><!--centercontent-->
+
+{% endblock %}

@@ -1,0 +1,54 @@
+<div class="tableoptions">
+    <select class="radius3" id="select_filter">
+        <option value="-1">所有</option>
+        <option value="0">未开始</option>
+        <option value="1">进行中</option>
+        <option value="2">成功结束</option>
+        <option value="3">失败结束</option>
+    </select> &nbsp;
+</div>
+<table id="apptable" cellpadding="0" cellspacing="0" border="0" class="stdtable stdtablequick">
+    <colgroup>
+        <col class="con0">
+        <col class="con0">
+        <col class="con0">
+        <col class="con0">
+        <col class="con0">
+        <col class="con0">
+        <col class="con1">
+    </colgroup>
+    <thead>
+        <tr>
+            <th class="head0">id</th>
+            <th class="head0">url</th>
+            <th class="head0">起始时间</th>
+            <th class="head0">结束时间</th>
+            <th class="head0">状态</th>
+            <th class="head0">结果说明</th>
+            <th class="head1">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for entity in entities %}
+        <tr>
+            <td class="con0">{{ entity.id }}</td>
+            <td class="con0">{{ entity.url }}</td>
+            <td class="center">{% if entity.startTime %}{{ entity.startTime | date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td class="center">{% if entity.endTime %}{{ entity.endTime | date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td class="center">
+                {% if entity.state == 0 %}
+                未开始
+                {% elseif entity.state == 1 %}
+                进行中
+                {% elseif entity.state == 2 %}
+                成功结束
+                {% elseif entity.state == 3 %}
+                失败结束
+                {% endif %}
+            </td>
+            <td class="con0">{{ entity.msg }}</td>
+            <td class="center"><button class="j_del stdbtn btn_red">删 除</button></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

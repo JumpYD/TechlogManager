@@ -1,0 +1,81 @@
+<?php
+
+namespace Techlog\ManagerBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Article
+ *
+ * @ORM\Table(name="article")
+ * @ORM\Entity(repositoryClass="Techlog\ManagerBundle\Repository\ArticleRepository")
+ */
+class Article
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="article_id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $articleId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=100, nullable=false)
+     */
+    private $title;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="inserttime", type="string", nullable=false)
+     */
+    private $inserttime;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="updatetime", type="string", nullable=false)
+     */
+    private $updatetime;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="indexs", type="string", length=2048, nullable=true)
+     */
+    private $indexs;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="category_id", type="integer", nullable=false)
+     */
+    private $categoryId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title_desc", type="string", length=100, nullable=false)
+     */
+    private $titleDesc;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="draft", type="text", nullable=false)
+     */
+    private $draft;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="access_count", type="integer", nullable=false)
+     */
+    private $accessCount;
+
+
+}

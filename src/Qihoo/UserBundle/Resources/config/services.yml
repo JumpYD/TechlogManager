@@ -1,0 +1,30 @@
+parameters:
+    security.access.auth_voter.class: Qihoo\UserBundle\Security\Authentication\Voter\AuthVoter
+    qihoo_user.entity.provider.class: Qihoo\UserBundle\Security\User\UserRoleProvider
+    qihoo_user.security.authentication.provider.class: Qihoo\UserBundle\Security\Authentication\Provider\QihooUserProvider
+    qihoo_user.security.authentication.listener.class: Qihoo\UserBundle\Security\Firewall\QihooUserListener
+
+services:
+    security.access.auth_voter:
+        class: "%security.access.auth_voter.class%"     
+        arguments: [ "@service_container" ]
+        tags:
+            - { name: security.voter }
+            
+    qihoo_user.entity.provider:
+        class:  "%qihoo_user.entity.provider.class%"
+        arguments: [ "@service_container" ]
+            
+    qihoo_user.security.authentication.provider:
+        class:  "%qihoo_user.security.authentication.provider.class%"
+        arguments: [ "@qihoo_user.entity.provider" ]
+
+    qihoo_user.security.authentication.listener:
+        class:  "%qihoo_user.security.authentication.listener.class%"
+        arguments: [ "@security.context", "@service_container", "@qihoo_user.security.authentication.provider" ]
+
+    qihoo.handler.session_idle:
+        class: Qihoo\UserBundle\Handler\UserHandler
+        arguments: ["@session", "@security.context", "@router", %session_max_idle_time%]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
