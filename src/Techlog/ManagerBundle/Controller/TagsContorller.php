@@ -17,10 +17,15 @@ use Techlog\ManagerBundle\Entity\Tags;
  */
 class TagsContorller extends Controller
 {
-    private $input_list = array();
-    private $range_list = array();
+    private $input_list = array('tag_id', 'tag_name');
+    private $range_list = array('total', 'inserttime');
 	private $select_list = array();
-    private $key_value_map = array();
+	private $key_value_map = array(
+		'tag_id'	=> array('name'=>'id', 'width'=>3),
+		'tag_name'	=> array('name'=>'名称', 'width'=>12),
+		'total'		=> array('name'=>'文章数', 'width'=>3),
+		'inserttime'	=> array('name'=>'创建时间', 'width'=>6),
+	);
 
     /**
      * @Route("/list", name="techlog_manager_tags_list");
@@ -31,16 +36,76 @@ class TagsContorller extends Controller
         return $this->getQueryParams($request);
 	}
 
+    /**
+     * @Route("/query", name="techlog_manager_tags_query");
+	 * @Template("TechlogManagerBundle:Tags:query_result.html.twig")
+     */
+    public function queryAction (Request $request)
+    {
+        return $this->getQueryParams($request);
+	}
+
+    /**
+     * @Route("/modify", name="techlog_manager_tags_modify");
+	 * @Template("TechlogManagerBundle:Tags:modify.html.twig")
+     */
+    public function modifyAction (Request $request)
+    {
+        if (!$request->get('tag_id'))
+            throw new \Exception('id is missing');
+        $id = $request->get('tag_id');
+
+        $em = $this->getDoctrine()->getEntityManager();
+		$entity = $em->getRepository('TechlogManagerBundle:Tags')->findOneByTagId($id);
+        if (empty($entity))
+            throw new \Exception('id is wrong');
+
+		return array('data'=>$entity);
+	}
+
+    /**
+     * @Route("/modifybasic", name="techlog_manager_tags_modifybasic");
+     */
+    public function modifybasicAction (Request $request)
+    {
+    	\date_default_timezone_set('PRC');
+        if (!$request->get('tag_id'))
+			return new JsonResponse(array('code'=>1, 'msg'=>'id is missing'));
+        $id = $request->get('tag_id');
+
+        $em = $this->getDoctrine()->getEntityManager();
+		$rp = $em->getRepository('TechlogManagerBundle:Tags');
+		$entity = $rp->findOneByTagId($id);
+        if (empty($entity))
+			return new JsonResponse(array('code'=>1, 'msg'=>'id is wrong'));
+
+		$tag_name = $request->get('tag_name');
+		if (empty($tag_name))
+			return new JsonResponse(array('code'=>1, 'msg'=>'tag_name cannot be empty'));
+
+		$new_entity = $rp->findOneByTagName($tag_name);
+		if (empty($new_entity))
+		{
+			$entity->setTagName($tag_name);
+			$entity->setInserttime(date('Y-m-d H:i:s'));
+			$em->persist($entity);
+			$em->flush();
+
+			return new JsonResponse(array('code'=>0, 'msg'=>'更新成功', 'url'=>$this->generateUrl('techlog_manager_tags_list').'?tag_id='.$id));
+		}
+		else
+		{
+			$new_id = $new_entity->getTagId();
+			$rp->setTagId($id, $new_id);
+
+			return new JsonResponse(array('code'=>0, 'msg'=>'更新成功', 'url'=>$this->generateUrl('techlog_manager_tags_list').'?tag_id='.$new_id));}
+	}
+
     private function getQueryParams($request)
     {
         $params_key = $this->get_keys();
         $params = $this->getParams($request, $params_key);
 
-		if ($this->getUser()->getUserName() != 'admin')
-			$params['root'] = 0;
-		else
-			$params['root'] = 1;
-		
         if (!isset($params['sortby']))
             $params['sortby'] = 'article_id';
         if (!isset($params['asc']))
@@ -55,7 +120,7 @@ class TagsContorller extends Controller
         $repository_key = $this->get_repository_key();
 
         $em = $this->getDoctrine()->getEntityManager();
-		list($total, $data) = $em->getRepository('TechlogManagerBundle:Article')->getList($start, $limit, $params, $repository_key);
+		list($total, $data) = $em->getRepository('TechlogManagerBundle:Tags')->getList($start, $limit, $params, $repository_key);
 
         $totalPages = (int)(($total + $limit - 1) / $limit);
 
@@ -79,8 +144,8 @@ class TagsContorller extends Controller
     private function get_repository_key()
     {
         $repository_key = array();
-        $repository_key['like_list'] = array_diff($this->input_list, array('article_id'));
-        $repository_key['equal_list'] = array_merge(array_keys($this->select_list), array('article_id'));
+        $repository_key['like_list'] = array_diff($this->input_list, array('tag_id'));
+        $repository_key['equal_list'] = array_merge(array_keys($this->select_list), array('tag_id'));
         $repository_key['range_list'] = $this->range_list;
 
         return $repository_key;

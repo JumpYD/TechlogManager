@@ -18,7 +18,7 @@ use Techlog\ManagerBundle\Entity\Article;
 class ArticleController extends Controller
 {
     private $input_list = array('article_id', 'title');
-    private $range_list = array('access_count');
+    private $range_list = array('access_count', 'inserttime', 'updatetime');
 	private $select_list = array('category_id' => array(1=>'龙潭书斋',
 		2=>'读书笔记', 3=>'龙渊阁记', 4=>'技术分享', 5=>'龙泉日记', 6=>'龙泉财报'));
     private $key_value_map = array(
@@ -64,7 +64,10 @@ class ArticleController extends Controller
         if (empty($entity))
             throw new \Exception('id is wrong');
 
-        return array('data'=>$entity, 'select_list'=>$this->select_list);
+		return array(
+			'data'=>$entity,
+			'select_list'=>$this->select_list
+		);
 	}
 
     /**
@@ -81,7 +84,7 @@ class ArticleController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
 		$entity = $em->getRepository('TechlogManagerBundle:Article')->findOneByArticleId($id);
         if (empty($entity))
-            throw new JsonResponse(array('code'=>1, 'msg'=>'id is wrong'));
+			return new JsonResponse(array('code'=>1, 'msg'=>'id is wrong'));
 
 		$entity->setTitle($request->get('title'));
 		$entity->setCategoryId($request->get('category_id'));

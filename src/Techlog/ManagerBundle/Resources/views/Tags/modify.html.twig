@@ -8,46 +8,26 @@
 
 <div class="centercontent">
     <div class="pageheader">
-        <h1 class="pagetitle">文章修改</h1>
+        <h1 class="pagetitle">标签修改</h1>
         <ul class="hornav">
-            <li><a href="{{ path('techlog_manager_article_list') }}">文章管理</a></li>
-            <li class="current"><a href="{{ path('techlog_manager_article_modify', {'article_id':data.articleID}) }}">文章修改</a></li>
+            <li><a href="{{ path('techlog_manager_tags_list') }}">标签管理</a></li>
+            <li class="current"><a href="{{ path('techlog_manager_tag_modify', {'tag_id':data.tagID}) }}">标签修改</a></li>
         </ul>
     </div>
 
     <form id="modifyform" name="modifyform" class="stdform_q" method="post">
         <div style="margin-top:40px;">
             <p>
-                <label>文章 ID</label>
-                <span class="field"><input type="text" id="article_id" name="article_id" class="smallinput" value="{{ data.articleId }}" readonly="readonly" /></span>
+                <label>ID</label>
+                <span class="field"><input type="text" id="tag_id" name="tag_id" class="smallinput" value="{{ data.tagId }}" readonly="readonly" /></span>
             </p>
         </div>
         <div>
             <p>
-                <label>文章标题</label>
-                <span class="field"><input type="text" id="title" name="title" class="smallinput" value="{{ data.title }}"/></span>
+                <label>标签名称</label>
+                <span class="field"><input type="text" id="tag_name" name="tag_name" class="smallinput" value="{{ data.tagName }}"/></span>
             </p>
         </div>
-		<div>
-			<p>
-				<label>所属分类</label>
-				<span class="field">
-                <select id="category_id" class="uniformselect" name="category_id">
-					{% for key,value in select_list['category_id'] %}
-					<option value="{{ key }}" {% if data.categoryId == key %}selected="selected"{% endif %}>{{ value }}</option>
-					{% endfor %}
-				</select>
-				</span>
-			</p>
-		</div>
-		<div>
-			<p>
-				<label>备注</label>
-				<span class="field">
-					<input type="text" id="title_desc" name="title_desc" class="smallinput" value="{{ data.titleDesc }}" />
-				</span>
-			</p>
-		</div>
 		<div>
 			<p>
 				<label>操作</label>
@@ -62,6 +42,12 @@
 <script type="text/javascript">
 function confirm_submit()
 {
+	if ($('#tag_name').val() == '')
+	{
+		jAlert('标签名称不能为空', '提示');
+		return false;
+	}
+
     jConfirm
 	(
 	 	"请确认是否提交？",
@@ -73,7 +59,7 @@ function confirm_submit()
 				$.ajax
 				(
 					{
-						'url'	: "{{ path('techlog_manager_article_modifybasic') }}",
+						'url'	: "{{ path('techlog_manager_tags_modifybasic') }}",
 						'type'	: 'post',
 						'data'	: get_params(),
                         'dataType' : 'json',
@@ -106,7 +92,7 @@ function confirm_submit()
 
 function get_params()
 {
-	var keys = {'article_id':1, 'title':1, 'category_id':1, 'title_desc':1};
+	var keys = {'tag_id':1, 'tag_name':1};
 
 	var params = {};
 	for (var key in keys)

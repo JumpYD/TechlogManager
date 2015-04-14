@@ -4,10 +4,10 @@ $(document).ready(function() {
         timeFormat: 'HH:mm:ss',
         showSecond: true
     };
-    $('#start_ctime').datetimepicker(datetimeConfig);
-    $('#end_ctime').datetimepicker(datetimeConfig);
-    $('#start_utime').datetimepicker(datetimeConfig);
-    $('#end_utime').datetimepicker(datetimeConfig);
+    $('#start_inserttime').datetimepicker(datetimeConfig);
+    $('#end_inserttime').datetimepicker(datetimeConfig);
+    $('#start_updatetime').datetimepicker(datetimeConfig);
+    $('#end_updatetime').datetimepicker(datetimeConfig);
     hideProgress();
 
    $('#queryform').submit(function() {
